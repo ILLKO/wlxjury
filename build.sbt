@@ -3,7 +3,6 @@ import sbt.Keys._
 lazy val root = identity((project in file("."))
   .enablePlugins(PlayScala, DebianPlugin, RpmPlugin, JavaAppPackaging))
 
-
 name := "wlxjury"
 
 organization := "org.intracer"
@@ -14,7 +13,7 @@ scalaVersion := "2.12.6"
 
 val ScalikejdbcVersion = "3.2.2"
 val ScalikejdbcPlayVersion = "2.6.0-scalikejdbc-3.2"
-val ScalawikiVersion = "0.5.0"
+val ScalawikiVersion = "0.6.1"
 val PlayMailerVersion = "6.0.1"
 val PlaySilhouetteVersion = "5.0.5"
 
@@ -59,7 +58,9 @@ libraryDependencies ++= Seq(
   ehcache,
   specs2 % Test,
   jdbc % Test,
-  "com.wix" % "wix-embedded-mysql" % "4.1.2" % Test,
+  "com.wix" % "wix-embedded-mysql" % "4.2.0" % Test,
+  "net.java.dev.jna" % "jna" % "4.5.0" % Test,
+  "net.java.dev.jna" % "jna-platform" % "4.5.0" % Test,
   "com.h2database" % "h2" % "1.4.193" % Test,
   "com.mohiva" %% "play-silhouette-testkit" % PlaySilhouetteVersion % Test
 )
@@ -73,6 +74,7 @@ routesGenerator := StaticRoutesGenerator
 //doc in Compile <<= target.map(_ / "none")
 
 javaOptions in Test += "-Dconfig.file=test/resources/application.conf"
+javaOptions in Test += "-Djna.nosys=true"
 
 //rpmRelease := "1"
 
